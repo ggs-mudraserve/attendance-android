@@ -3,7 +3,7 @@ package com.company.attendance.utils
 object Constants {
     // Supabase Configuration
     const val SUPABASE_URL = "https://vxcdvuekhfdkccjhbrhz.supabase.co"
-    const val SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ4Y2R2dWVraGZka2Njamhicmh6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDU5MjQwMDAsImV4cCI6MjAyMTUwMDAwMH0.temporary-key-for-testing" // Replace with actual anon key
+    const val SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ4Y2R2dWVraGZka2Njamhicmh6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM0ODI4NjUsImV4cCI6MjA1OTA1ODg2NX0.6SnpBAEQRSYlegMFE-QMLs5tyUG1W31EGdzkLeYYI7k"
     
     // Default Server Configuration
     const val DEFAULT_SERVER_IP = "192.168.1.100"
