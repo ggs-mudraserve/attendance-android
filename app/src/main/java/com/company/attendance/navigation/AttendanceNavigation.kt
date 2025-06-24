@@ -41,11 +41,19 @@ fun AttendanceNavigation(
         }
         
         composable("onboarding") {
+            val viewModel = hiltViewModel<com.company.attendance.ui.screens.onboarding.OnboardingViewModel>()
             OnboardingScreen(
-                viewModel = hiltViewModel(),
+                viewModel = viewModel,
                 onOnboardingComplete = {
-                    navController.navigate("dashboard") {
-                        popUpTo("onboarding") { inclusive = true }
+                    // Check if user skipped to settings for server configuration
+                    if (viewModel.uiState.value.isSkippedToSettings) {
+                        navController.navigate("settings") {
+                            popUpTo("onboarding") { inclusive = true }
+                        }
+                    } else {
+                        navController.navigate("dashboard") {
+                            popUpTo("onboarding") { inclusive = true }
+                        }
                     }
                 }
             )

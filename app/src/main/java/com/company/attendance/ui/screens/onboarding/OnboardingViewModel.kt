@@ -193,48 +193,24 @@ class OnboardingViewModel @Inject constructor(
     fun skipBankDetails() {
         val currentState = _uiState.value
         
-        if (!currentState.permissionsGranted) {
-            _uiState.value = currentState.copy(
-                permissionError = "Please grant location permission to continue"
-            )
-            return
-        }
+        // Allow skipping to settings even without permissions for server configuration
+        _uiState.value = currentState.copy(
+            isLoading = false,
+            isCompleted = true,
+            error = null
+        )
+    }
+    
+    fun skipToSettings() {
+        val currentState = _uiState.value
         
-        viewModelScope.launch {
-            _uiState.value = currentState.copy(
-                isLoading = true,
-                error = null
-            )
-            
-            repository.onboardDevice(null)
-                .onSuccess { message ->
-                    _uiState.value = _uiState.value.copy(
-                        isLoading = false,
-                        isCompleted = true
-                    )
-                }
-                .onFailure { error ->
-                    val errorMessage = when {
-                        error.message?.contains("device already bound", ignoreCase = true) == true ||
-                        error.message?.contains("device_id", ignoreCase = true) == true -> {
-                            "This device is already registered to another employee. Please contact your administrator."
-                        }
-                        error.message?.contains("network", ignoreCase = true) == true -> {
-                            "Network error. Please check your connection and try again."
-                        }
-                        error.message?.contains("unauthorized", ignoreCase = true) == true -> {
-                            "Authentication expired. Please log in again."
-                        }
-                        else -> error.message ?: "Device registration failed. Please try again."
-                    }
-                    
-                    _uiState.value = _uiState.value.copy(
-                        isLoading = false,
-                        error = errorMessage,
-                        isDeviceAlreadyBound = error.message?.contains("device already bound", ignoreCase = true) == true
-                    )
-                }
-        }
+        // Mark as completed to proceed to settings
+        _uiState.value = currentState.copy(
+            isLoading = false,
+            isCompleted = true,
+            isSkippedToSettings = true,
+            error = null
+        )
     }
     
     private fun validateAccountNumber(accountNumber: String): String? {
@@ -298,6 +274,7 @@ data class OnboardingUiState(
     val isLoading: Boolean = false,
     val isCompleted: Boolean = false,
     val isDeviceAlreadyBound: Boolean = false,
+    val isSkippedToSettings: Boolean = false,
     val accountNumberError: String? = null,
     val ifscCodeError: String? = null,
     val bankNameError: String? = null,

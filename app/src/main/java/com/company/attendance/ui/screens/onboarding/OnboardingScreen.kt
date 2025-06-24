@@ -346,11 +346,11 @@ fun OnboardingScreen(
             
             // Skip Button
             OutlinedButton(
-                onClick = viewModel::skipBankDetails,
+                onClick = viewModel::skipToSettings,
                 enabled = !uiState.isLoading,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text(stringResource(R.string.skip_bank_details))
+                Text("Skip for now")
             }
         }
         
